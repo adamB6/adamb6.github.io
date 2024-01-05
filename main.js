@@ -1,21 +1,33 @@
-const menuToggle = document.querySelector('.toggle')
-const showcase = document.querySelector('.showcase')
+function openTab(evt, tabName) {
+    var text = document.getElementsByClassName("text");
+    var tablinks = document.getElementsByClassName("tablinks");
 
-menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active')
-    showcase.classList.toggle('active')
-    if (video.paused) {
-        video.play();
-    } else {
-        video.pause();
+    for (var i = 0; i < text.length; i++) {
+        text[i].classList.toggle("is-visible", text[i].id === tabName);
+        text[i].classList.toggle("slide-in", text[i].id === tabName);
+        text[i].classList.toggle("slide-out", text[i].id !== tabName);
     }
-})
 
-document.getElementById('menuToggle').addEventListener('click', function() {
-    var video = document.getElementById('nebulaVideo');
-    if (video.paused) {
-        video.play();
-    } else {
-        video.pause();
+    for (var i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.toggle("active", tablinks[i].getAttribute('data-tab') === tabName);
     }
+}
+
+// Initialize with Home
+document.addEventListener('DOMContentLoaded', (event) => {
+    openTab(event, 'Home');
 });
+
+// Click effect
+document.addEventListener('click', function(e) {
+    let span = document.createElement("span");
+    span.classList.add("click_effect");
+    span.style.top = `${e.pageY}px`;
+    span.style.left = `${e.pageX}px`;
+    document.body.appendChild(span);
+
+    setTimeout(() => {
+        span.remove();
+    }, 600);
+});
+

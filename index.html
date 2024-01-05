@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,39 +8,70 @@
 
     <title>Adam's Portfolio</title>
 </head>
+
 <body>
+    <header>
+        <h2 class="logo">Adam's Portfolio</h2>
+    </header>
     <section class="showcase">
-        <header>
-            <h2 class="logo">Adam's Portfolio</h2>
-            <div class="toggle"></div>
-        </header>
-
-        <div class="overlay"></div>
-
-        <div class="text">
-            <h2>Welcome</h2>
-            <h3>To My Portfolio</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam nesciunt officia fuga magnam facilis? Aliquid ab voluptate minus ex officia sint earum eius possimus esse porro. Ab numquam alias, suscipit libero doloribus ipsam provident? Officia incidunt, voluptate iste dicta id placeat cumque velit sit a voluptas tempora illo, necessitatibus eos praesentium laboriosam nulla. Esse aperiam illum odio velit voluptatem tempora nam magni provident suscipit, voluptates est perferendis neque voluptate dignissimos quidem maxime hic rem, earum repellendus ipsum veritatis perspiciatis. Dolore distinctio quod sint nulla maxime voluptas ducimus incidunt culpa, omnis possimus amet accusamus neque quia facere excepturi ipsa ullam provident!</p>
-            <a href="#">More</a>
+        <div id="Home" class="text">
+            <h3>Welcome</h3>
+            <h4>To My Portfolio Website</h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam nesciunt officia fuga magnam facilis?
+                Aliquid ab voluptate minus ex officia sint earum eius possimus esse porro. Ab numquam alias, suscipit
+                libero doloribus ipsam provident? Officia incidunt, voluptate iste dicta id placeat cumque velit sit a
+                voluptas tempora illo, necessitatibus eos praesentium laboriosam nulla. Esse aperiam illum odio velit
+                voluptatem tempora nam magni provident suscipit, voluptates est perferendis neque voluptate dignissimos
+                quidem maxime hic rem, earum repellendus ipsum veritatis perspiciatis. Dolore distinctio quod sint nulla
+                maxime voluptas ducimus incidunt culpa, omnis possimus amet accusamus neque quia facere excepturi ipsa
+                ullam provident!</p>
+            <a href="#">Resume</a>
         </div>
 
+        <div id="About" class="text">
+            <h3>About Me</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse facere beatae, sequi illo quisquam
+                reiciendis minima fugit temporibus libero modi sunt. Earum similique magnam totam inventore eaque ab hic
+                doloribus quidem, cum, ullam iste suscipit facilis. Eos voluptates tenetur architecto incidunt! Minima
+                nesciunt nemo dolore eos, voluptate numquam, quod explicabo vel vitae quas rem ut nobis enim iusto modi!
+                Laborum consequatur itaque tempore! Iusto, tempora! Odit temporibus fugit minus amet soluta sit ipsa
+                tempore iusto nulla, consequuntur itaque, explicabo adipisci pariatur? Voluptatibus reprehenderit quasi
+                temporibus hic harum minima atque numquam aliquam doloremque quidem dolor, laborum soluta expedita
+                maiores ea quibusdam?</p>
+        </div>
+
+        <div id="Blog" class="text">
+            <h3>Blog</h3>
+            <div class="blog-post">
+                <h4>Blog Post Title 1</h4>
+                <p>Short description or excerpt of the post...</p>
+                <a href="#">Read More</a>
+            </div>
+            <div class="blog-post">
+                <h4>Blog Post Title 2</h4>
+                <p>Short description or excerpt of the post...</p>
+                <a href="#">Read More</a>
+            </div>
+        </div>
+        <!--
         <ul class="social">
             <li><a href="https://github.com/adamB6" target="_blank"><img src="images/github.png" alt="Github"></a></li>
-            <li><a href="https://www.linkedin.com/in/adam-botens/" target="_blank"><img src="images/linkedin.png" alt="Github"></a></li>
+            <li><a href="https://www.linkedin.com/in/adam-botens/" target="_blank"><img src="images/linkedin.png"
+                        alt="Github"></a></li>
         </ul>
+        -->
+        
     </section>
-
-    <div class="menu">
+    <footer class="navbar">
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="#" class="tablinks" data-tab="Home" onclick="openTab(event, 'Home')">Home</a></li>
+            <li><a href="#" class="tablinks" data-tab="About" onclick="openTab(event, 'About')">About</a></li>
+            <li><a href="#" class="tablinks" data-tab="Blog" onclick="openTab(event, 'Blog')">Blog</a></li>
             <li><a href="#">Projects</a></li>
-            <li><a href="#">Blog</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
-        <video id="nebulaVideo" src="nebula.mp4" muted></video>        
-        <div class="overlay"></div>
-    </div>
+    </footer>
     <script src="main.js"></script>
 </body>
+
 </html>
