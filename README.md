@@ -17,5 +17,4 @@ This website is built with a focus on simplicity, utilizing HTML, CSS, and vanil
 To view the website locally on your machine, simply clone the repository and open the `index.html` file in your browser.
 
 ```bash
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/adamB6/portfolio.git
