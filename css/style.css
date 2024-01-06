@@ -20,8 +20,8 @@
     border: 5px solid white;
     pointer-events: none;
     z-index: 9999;
-    margin-top: -4.5vh;
-    margin-left: -4.5vh;
+    margin-top: -4.5dvh;
+    margin-left: -4.5dvh;
     opacity: 0;
     border-radius: 50%;
     animation-name: click_animation;
@@ -69,7 +69,7 @@
     justify-content: space-between;
     position: relative;
     list-style: none;
-    margin: 2vh;
+    margin: 2dvh;
 }
 
 .navbar ul li a {
@@ -88,7 +88,7 @@
 .showcase {
     position: absolute;
     width: 100%;
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
