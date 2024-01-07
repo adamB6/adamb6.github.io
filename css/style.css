@@ -42,7 +42,7 @@
 
 
 .logo {
-    position: absolute;
+    position: sticky;
     background-color: black;
     color: white;
     text-transform: uppercase;
@@ -55,7 +55,7 @@
 
 /* Navigation Bar */
 .navbar {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     text-align: center;
@@ -76,7 +76,7 @@
 
 .navbar ul li a {
     text-decoration: none;
-    font-size: 24px;
+    font-size: 2em;
     color: white;
 }
 
@@ -84,13 +84,13 @@
     color: var(--overlay-color);
 }
 
-/* Showcase -- this is the main text blocks
+/* Showcase -- this holds the text blocks
 ***along with slide animation and media for 
 ***small screens*/
 .showcase {
     position: absolute;
     width: 100%;
-    min-height: 100dvh;
+    min-height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -146,14 +146,14 @@
 }
 
 .text h2 {
-    font-size: 5em;
+    font-size: 4em;
     font-weight: 800;
     line-height: 1em;
     text-transform: uppercase;
 }
 
 .text h3 {
-    font-size: 4em;
+    font-size: 3em;
     font-weight: 700;
     line-height: 1em;
     text-transform: uppercase;
@@ -161,7 +161,8 @@
 
 .text p {
     font-size: 1.1em;
-    margin: 20px 0;
+    padding: 2dvh;
+    padding-top: .7dvh;;
     font-weight: 400;
     text-align: center;
 }
@@ -182,30 +183,6 @@
 .text a:hover {
     letter-spacing: 6px;
 }
-
-@media(max-width: 550px) {
-    .showcase, 
-    .showcase header {
-        padding: 40px;
-    }
-
-    .navbar ul li a {
-        font-size: 16px;
-    }
-
-    .text {
-        text-align: center;
-    }
-
-    .text h2 {
-        font-size: 3em;
-    }
-
-    .text h3 {
-        font-size: 1.5em;
-    }
-}
-
 /*
 .social {
     position: absolute;
@@ -236,7 +213,7 @@
 
 /* Styles specific to the blog section */
 #Blog {
-    padding: 20px;
+    padding: 5dvh;
 }
 
 .blog-post {
@@ -244,4 +221,35 @@
     padding: 10px;
     background-color: black;
     border: dotted thin gray;
+}
+
+@media(max-width: 580px) {
+    .showcase,
+
+    .showcase header {
+        padding: 40px;
+    }
+
+    .navbar ul li a {
+        font-size: 1.2em;
+    }
+
+    .text {
+        text-align: center;
+        font-size: .8em;
+    }
+
+    .text h2 {
+        font-size: 2em;
+    }
+
+    .text h3 {
+        font-size: 1.5em;
+    }
+}
+
+@media(max-height: 600px){
+    .showcase {
+        padding-bottom: 30dvh;
+    }
 }
