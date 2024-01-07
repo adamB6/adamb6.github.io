@@ -13,10 +13,6 @@
     overflow: hidden;
 }
 
-*::first-letter{
-    color: green;
-}
-
 .click_effect {
     position: absolute;
     width: 80px;
@@ -54,6 +50,7 @@
     width: 100%;
     z-index: 1;
     text-align: center;
+    border-bottom: ridge thin green;
 }
 
 /* Navigation Bar */
