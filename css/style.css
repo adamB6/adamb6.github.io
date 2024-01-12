@@ -2,7 +2,7 @@
 
 
 :root {
-    --overlay-color: rgba(0, 128, 0, 1);
+    --overlay-color: rgba(50, 205, 50, 1);
 }
 
 * {
@@ -17,7 +17,7 @@
     position: absolute;
     width: 80px;
     height: 80px;
-    border: 5px solid green;
+    border: 5px solid limegreen;
     pointer-events: none;
     z-index: 9999;
     margin-top: -40px;
@@ -50,7 +50,7 @@
     width: 100%;
     z-index: 1;
     text-align: center;
-    border-bottom: ridge thin green;
+    border-bottom: ridge thin limegreen;
 }
 
 /* Navigation Bar */
@@ -62,7 +62,7 @@
     background-color: black;
     border: solid;
     z-index: 1;
-    border-top: ridge thin green;
+    border-top: ridge thin limegreen;
 }
 
 .navbar ul {
@@ -85,7 +85,7 @@
 }
 
 .navbar ul li a.last-clicked {
-    color: green;
+    color: limegreen;
 }
 
 /* Showcase -- this holds the text blocks

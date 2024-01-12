@@ -1,5 +1,19 @@
 var currentTabIndex = 0;
 
+// Click effect
+document.addEventListener('click', function(e) {
+    let span = document.createElement("span");
+    span.classList.add("click_effect");
+    span.style.top = `${e.pageY}px`;
+    span.style.left = `${e.pageX}px`;
+    document.body.appendChild(span);
+
+    setTimeout(() => {
+        span.remove();
+    }, 600);
+});
+
+// This is for tab selection
 function openTab(evt, tabName) {
     var text = document.getElementsByClassName("text");
     var tablinks = document.getElementsByClassName("tablinks");
@@ -51,16 +65,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
     openTab(event, 'Home');
 });
 
-// Click effect
-document.addEventListener('click', function(e) {
-    let span = document.createElement("span");
-    span.classList.add("click_effect");
-    span.style.top = `${e.pageY}px`;
-    span.style.left = `${e.pageX}px`;
-    document.body.appendChild(span);
+// This is for mouse sliding (laptops)
+const slider = document.getElementById('slider');
+let isDragging = false;
+let startX;
+let startY;
 
-    setTimeout(() => {
-        span.remove();
-    }, 600);
+// When the mouse is pressed down
+document.addEventListener('mousedown', function(e) {
+    startX = e.pageX; 
+    isDragging = true;
 });
 
+// When the mouse is moved
+document.addEventListener('mousemove', function(e) {
+    if (isDragging) {
+        const currentX = e.pageX;
+        const currentY = e.pageY;
+
+        // Determine direction
+        const deltaX = currentX - startX;
+        const deltaY = currentY - startY;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            // Horizontal movement
+            if (deltaX > 0) {
+                console.log("Moving right");
+            } else {
+                console.log("Moving left");
+            }
+        } 
+    }
+});
+
+// When the mouse button is released
+document.addEventListener('mouseup', function(e) {
+    isDragging = false;
+});
