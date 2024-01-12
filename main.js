@@ -13,7 +13,7 @@ document.addEventListener('click', function(e) {
     }, 600);
 });
 
-// This is for tab selection
+/* -------------------- This is for tab selection ------------------------------ */
 function openTab(evt, tabName) {
     var text = document.getElementsByClassName("text");
     var tablinks = document.getElementsByClassName("tablinks");
@@ -65,40 +65,95 @@ document.addEventListener('DOMContentLoaded', (event) => {
     openTab(event, 'Home');
 });
 
-// This is for mouse sliding (laptops)
+/*----------------- This is for mouse sliding (laptops) ------------------------- */
 const slider = document.getElementById('slider');
 let isDragging = false;
 let startX;
-let startY;
 
-// When the mouse is pressed down
-document.addEventListener('mousedown', function(e) {
-    startX = e.pageX; 
+// When the mouse is pressed down on the slider
+slider.addEventListener('mousedown', function(e) {
+    startX = e.pageX;
     isDragging = true;
 });
 
-// When the mouse is moved
-document.addEventListener('mousemove', function(e) {
-    if (isDragging) {
-        const currentX = e.pageX;
-        const currentY = e.pageY;
+// When the mouse is moved while dragging
+slider.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
 
-        // Determine direction
-        const deltaX = currentX - startX;
-        const deltaY = currentY - startY;
+    const currentX = e.pageX;
+    const deltaX = currentX - startX;
 
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            // Horizontal movement
-            if (deltaX > 0) {
-                console.log("Moving right");
-            } else {
-                console.log("Moving left");
-            }
-        } 
+    if (Math.abs(deltaX) > 20) { // Threshold for detecting a slide
+        // Determine the direction of the slide
+        if (deltaX > 0) {
+            // Slide Right
+            switchTab('right');
+        } else {
+            // Slide Left
+            switchTab('left');
+        }
+        // Reset dragging state and startX
+        isDragging = false;
+        startX = currentX;
     }
 });
 
 // When the mouse button is released
-document.addEventListener('mouseup', function(e) {
+slider.addEventListener('mouseup', function(e) {
     isDragging = false;
+});
+
+// Function to switch tabs based on slide direction
+function switchTab(direction) {
+    var tablinks = document.getElementsByClassName("tablinks");
+
+    if (direction === 'right') {
+        // Move to the next tab, if possible
+        if (currentTabIndex < tablinks.length - 1) {
+            openTab(event, tablinks[currentTabIndex + 1].getAttribute('data-tab'));
+        }
+    } else {
+        // Move to the previous tab, if possible
+        if (currentTabIndex > 0) {
+            openTab(event, tablinks[currentTabIndex - 1].getAttribute('data-tab'));
+        }
+    }
+}
+
+/* ---------------------- This is for thumb sliding (phones) ----------------------------------- */
+
+let isTouching = false;
+let startTouchX;
+
+// When a touch starts on the slider
+slider.addEventListener('touchstart', function(e) {
+    startTouchX = e.touches[0].pageX;
+    isTouching = true;
+});
+
+// When a touch moves on the slider
+slider.addEventListener('touchmove', function(e) {
+    if (!isTouching) return;
+
+    const currentTouchX = e.touches[0].pageX;
+    const deltaTouchX = currentTouchX - startTouchX;
+
+    if (Math.abs(deltaTouchX) > 20) { // Threshold for detecting a slide
+        // Determine the direction of the slide
+        if (deltaTouchX > 0) {
+            // Slide Right
+            switchTab('right');
+        } else {
+            // Slide Left
+            switchTab('left');
+        }
+        // Reset touching state and startTouchX
+        isTouching = false;
+        startTouchX = currentTouchX;
+    }
+});
+
+// When the touch ends
+slider.addEventListener('touchend', function(e) {
+    isTouching = false;
 });
