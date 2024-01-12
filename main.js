@@ -57,13 +57,11 @@ slider.addEventListener('touchmove', e => handleSlide(e.touches[0].pageX, () => 
 slider.addEventListener('touchend', () => isTouching = false);
 
 // Handle slide movement
-// Handle slide movement
 function handleSlide(currentPosition, isSliding) {
     if (!isSliding()) return;
     const delta = currentPosition - (isDragging ? startX : startTouchX);
     if (Math.abs(delta) > 20) {
-        // Switch the direction here
-        switchTab(delta > 0 ? 'left' : 'right');
+        switchTab(delta > 0 ? 'right' : 'left');
         if (isDragging) startX = currentPosition;
         else startTouchX = currentPosition;
         isDragging = isTouching = false;
@@ -72,10 +70,9 @@ function handleSlide(currentPosition, isSliding) {
 
 // Switch tabs
 function switchTab(direction) {
-    // Switch the logic for left and right
-    if (direction === 'left' && currentTabIndex < tablinks.length - 1) {
+    if (direction === 'right' && currentTabIndex < tablinks.length - 1) {
         openTab(null, tablinks[currentTabIndex + 1].getAttribute('data-tab'));
-    } else if (direction === 'right' && currentTabIndex > 0) {
+    } else if (direction === 'left' && currentTabIndex > 0) {
         openTab(null, tablinks[currentTabIndex - 1].getAttribute('data-tab'));
     }
 }
