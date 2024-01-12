@@ -213,9 +213,14 @@
     transition: 0.2s;
 }
 
+#About{
+    overflow-y: auto;
+    height: 90%;
+}
 .text a:hover {
     letter-spacing: 6px;
 }
+
 /*
 .social {
     position: absolute;
