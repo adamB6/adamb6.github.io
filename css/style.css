@@ -216,6 +216,8 @@
 #About{
     overflow-y: auto;
     height: 90%;
+    padding-top: 10dvh;
+    justify-content: center;
 }
 .text a:hover {
     letter-spacing: 6px;
