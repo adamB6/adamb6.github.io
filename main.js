@@ -1,159 +1,91 @@
-var currentTabIndex = 0;
+let currentTabIndex = 0;
+const tablinks = document.getElementsByClassName("tablinks");
+const textElements = document.getElementsByClassName("text");
+const slider = document.getElementById('slider');
 
 // Click effect
 document.addEventListener('click', function(e) {
     let span = document.createElement("span");
-    span.classList.add("click_effect");
+    span.className = "click_effect";
     span.style.top = `${e.pageY}px`;
     span.style.left = `${e.pageX}px`;
     document.body.appendChild(span);
-
-    setTimeout(() => {
-        span.remove();
-    }, 600);
+    setTimeout(() => span.remove(), 600);
 });
 
-/* -------------------- This is for tab selection ------------------------------ */
+// Tab selection
 function openTab(evt, tabName) {
-    var text = document.getElementsByClassName("text");
-    var tablinks = document.getElementsByClassName("tablinks");
-    var previousTabIndex = currentTabIndex; // Store the previous index
+    let previousTabIndex = currentTabIndex;
 
-    // Update currentTabIndex to the new tab's index
-    for (var i = 0; i < tablinks.length; i++) {
-        // Remove green text class from all tabs
+    for (let i = 0; i < tablinks.length; i++) {
         tablinks[i].classList.remove("last-clicked");
-
-        // Check if this tab is the one being activated
         if (tablinks[i].getAttribute('data-tab') === tabName) {
             currentTabIndex = i;
-            // Add green text class to the active tab
             tablinks[i].classList.add("last-clicked");
-            console.log(tablinks[i].classList);
         }
-    }
-
-    // Apply animations based on the index comparison
-    for (var i = 0; i < text.length; i++) {
-        var isCurrentTab = text[i].id === tabName;
-        if (isCurrentTab) {
-            if (previousTabIndex > currentTabIndex) {
-                // Slide in from left if previous index was higher
-                text[i].classList.add("slide-in-left");
-                text[previousTabIndex].classList.add("slide-out-right");
-                text[i].classList.remove("slide-in-right", "slide-out-left", "slide-out-right");
-            } else {
-                // Slide in from right if previous index was lower or the same
-                text[i].classList.add("slide-in-right");
-                text[previousTabIndex].classList.add("slide-out-left");
-                text[i].classList.remove("slide-in-left", "slide-out-left", "slide-out-right");
-            }
-        } else {
-            text[i].classList.remove("slide-in-left", "slide-in-right");
-        }
-    }
-
-    // Update the active class for the tab links
-    for (var i = 0; i < tablinks.length; i++) {
         tablinks[i].classList.toggle("active", tablinks[i].getAttribute('data-tab') === tabName);
     }
-}
 
+    applyTabAnimations(tabName, previousTabIndex);
+}
 
 // Initialize with Home
 document.addEventListener('DOMContentLoaded', (event) => {
     openTab(event, 'Home');
 });
 
-/*----------------- This is for mouse sliding (laptops) ------------------------- */
-const slider = document.getElementById('slider');
+// Mouse sliding on laptops
 let isDragging = false;
 let startX;
 
-// When the mouse is pressed down on the slider
-slider.addEventListener('mousedown', function(e) {
+slider.addEventListener('mousedown', e => {
     startX = e.pageX;
     isDragging = true;
 });
+slider.addEventListener('mousemove', e => handleSlide(e.pageX, e => isDragging));
+slider.addEventListener('mouseup', () => isDragging = false);
 
-// When the mouse is moved while dragging
-slider.addEventListener('mousemove', function(e) {
-    if (!isDragging) return;
-
-    const currentX = e.pageX;
-    const deltaX = currentX - startX;
-
-    if (Math.abs(deltaX) > 20) { // Threshold for detecting a slide
-        // Determine the direction of the slide
-        if (deltaX > 0) {
-            // Slide Right
-            switchTab('right');
-        } else {
-            // Slide Left
-            switchTab('left');
-        }
-        // Reset dragging state and startX
-        isDragging = false;
-        startX = currentX;
-    }
-});
-
-// When the mouse button is released
-slider.addEventListener('mouseup', function(e) {
-    isDragging = false;
-});
-
-// Function to switch tabs based on slide direction
-function switchTab(direction) {
-    var tablinks = document.getElementsByClassName("tablinks");
-
-    if (direction === 'right') {
-        // Move to the next tab, if possible
-        if (currentTabIndex < tablinks.length - 1) {
-            openTab(event, tablinks[currentTabIndex + 1].getAttribute('data-tab'));
-        }
-    } else {
-        // Move to the previous tab, if possible
-        if (currentTabIndex > 0) {
-            openTab(event, tablinks[currentTabIndex - 1].getAttribute('data-tab'));
-        }
-    }
-}
-
-/* ---------------------- This is for thumb sliding (phones) ----------------------------------- */
-
+// Thumb sliding on phones
 let isTouching = false;
 let startTouchX;
 
-// When a touch starts on the slider
-slider.addEventListener('touchstart', function(e) {
+slider.addEventListener('touchstart', e => {
     startTouchX = e.touches[0].pageX;
     isTouching = true;
 });
+slider.addEventListener('touchmove', e => handleSlide(e.touches[0].pageX, () => isTouching));
+slider.addEventListener('touchend', () => isTouching = false);
 
-// When a touch moves on the slider
-slider.addEventListener('touchmove', function(e) {
-    if (!isTouching) return;
-
-    const currentTouchX = e.touches[0].pageX;
-    const deltaTouchX = currentTouchX - startTouchX;
-
-    if (Math.abs(deltaTouchX) > 20) { // Threshold for detecting a slide
-        // Determine the direction of the slide
-        if (deltaTouchX > 0) {
-            // Slide Right
-            switchTab('right');
-        } else {
-            // Slide Left
-            switchTab('left');
-        }
-        // Reset touching state and startTouchX
-        isTouching = false;
-        startTouchX = currentTouchX;
+// Handle slide movement
+function handleSlide(currentPosition, isSliding) {
+    if (!isSliding()) return;
+    const delta = currentPosition - (isDragging ? startX : startTouchX);
+    if (Math.abs(delta) > 20) {
+        switchTab(delta > 0 ? 'right' : 'left');
+        if (isDragging) startX = currentPosition;
+        else startTouchX = currentPosition;
+        isDragging = isTouching = false;
     }
-});
+}
 
-// When the touch ends
-slider.addEventListener('touchend', function(e) {
-    isTouching = false;
-});
+// Switch tabs
+function switchTab(direction) {
+    if (direction === 'right' && currentTabIndex < tablinks.length - 1) {
+        openTab(null, tablinks[currentTabIndex + 1].getAttribute('data-tab'));
+    } else if (direction === 'left' && currentTabIndex > 0) {
+        openTab(null, tablinks[currentTabIndex - 1].getAttribute('data-tab'));
+    }
+}
+
+// Apply animations
+function applyTabAnimations(tabName, previousTabIndex) {
+    for (let i = 0; i < textElements.length; i++) {
+        const isCurrentTab = textElements[i].id === tabName;
+        textElements[i].classList.remove("slide-in-left", "slide-in-right", "slide-out-left", "slide-out-right");
+        if (isCurrentTab) {
+            const animationClass = previousTabIndex > currentTabIndex ? "slide-in-left" : "slide-in-right";
+            textElements[i].classList.add(animationClass);
+            textElements[previousTabIndex].classList.add(previousTabIndex > currentTabIndex ? "slide-out-right" : "slide-out-left");
+        }
+    }
+}
