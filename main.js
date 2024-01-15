@@ -61,31 +61,47 @@ function handleSlide(currentPosition, isSliding) {
     if (!isSliding()) return;
     const delta = currentPosition - (isDragging ? startX : startTouchX);
     if (Math.abs(delta) > 20) {
+        console.log(delta)
         switchTab(delta > 0 ? 'right' : 'left');
-        if (isDragging) startX = currentPosition;
-        else startTouchX = currentPosition;
+        if (isDragging) {
+            startX = currentPosition;
+        } else {
+            startTouchX = currentPosition;
+        }
         isDragging = isTouching = false;
     }
 }
 
-// Switch tabs
+// Switch tabs based on slide direction
 function switchTab(direction) {
-    if (direction === 'right' && currentTabIndex < tablinks.length - 1) {
+    // Adjust the tab switching logic
+    if (direction === 'left' && currentTabIndex < tablinks.length - 1) {
         openTab(null, tablinks[currentTabIndex + 1].getAttribute('data-tab'));
-    } else if (direction === 'left' && currentTabIndex > 0) {
+    } else if (direction === 'right' && currentTabIndex > 0) {
         openTab(null, tablinks[currentTabIndex - 1].getAttribute('data-tab'));
     }
 }
+
 
 // Apply animations
 function applyTabAnimations(tabName, previousTabIndex) {
     for (let i = 0; i < textElements.length; i++) {
         const isCurrentTab = textElements[i].id === tabName;
         textElements[i].classList.remove("slide-in-left", "slide-in-right", "slide-out-left", "slide-out-right");
+        
         if (isCurrentTab) {
             const animationClass = previousTabIndex > currentTabIndex ? "slide-in-left" : "slide-in-right";
             textElements[i].classList.add(animationClass);
-            textElements[previousTabIndex].classList.add(previousTabIndex > currentTabIndex ? "slide-out-right" : "slide-out-left");
+        }
+
+        if (previousTabIndex !== currentTabIndex && previousTabIndex >= 0 && previousTabIndex < textElements.length) {
+            const animationClass = previousTabIndex > currentTabIndex ? "slide-out-right" : "slide-out-left";
+            textElements[previousTabIndex].classList.add(animationClass);
+            console.log(textElements)
         }
     }
 }
+
+window.onpopstate = function() {
+    alert("clicked back button");
+ }; history.pushState({}, '');

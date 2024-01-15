@@ -93,6 +93,7 @@
 ***small screens*/
 .showcase {
     position: absolute;
+    padding-top: 5dvh;
     width: 100%;
     min-height: 90%;
     display: flex;
@@ -169,13 +170,15 @@
 
 .text {
     position: absolute;
-    left: 0;
-    right: 0;
+    overflow-y: auto;
+    height: 90%;
+    min-width: 90%;
+    padding-top: 8dvh;
+    justify-content: center;
     text-align: center;
     opacity: 0;
     visibility: hidden;
     transform: translateX(100%);
-    transition: opacity 0.5s, visibility 0.5s, transform 0.5s;
 }
 
 .text h2 {
@@ -213,12 +216,6 @@
     transition: 0.2s;
 }
 
-#About{
-    overflow-y: auto;
-    height: 90%;
-    padding-top: 8dvh;
-    justify-content: center;
-}
 .text a:hover {
     letter-spacing: 6px;
 }
@@ -252,15 +249,12 @@
 
 
 /* Styles specific to the blog section */
-#Blog {
-    padding: 5dvh;
-}
 
 .blog-post {
     margin-bottom: 20px;
     padding: 10px;
-    background-color: black;
     border: dotted thin gray;
+    min-width: 90%;
 }
 
 @media(max-width: 580px) {
