@@ -21,7 +21,7 @@
 <body>
 
     <div class="container mt-5">
-
+        
         <!-- Display any info -->
         <?php if(isset($_REQUEST['info'])){ ?>
             <?php if($_REQUEST['info'] == "added"){?>
