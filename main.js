@@ -102,6 +102,6 @@ function applyTabAnimations(tabName, previousTabIndex) {
     }
 }
 
-window.onpopstate = function() {
-    alert("clicked back button");
- }; history.pushState({}, '');
+// window.onpopstate = function() {
+//     alert("clicked back button");
+//  }; history.pushState({}, '');
