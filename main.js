@@ -102,6 +102,18 @@ function applyTabAnimations(tabName, previousTabIndex) {
     }
 }
 
+
+fetch('blog/view.php')
+  .then(response => response.text())
+  .then(html => {
+      document.getElementById('Blog').innerHTML = html;
+  })
+  .catch(error => {
+      console.error('Error loading the PHP file:', error);
+  });
+
+
+
 // window.onpopstate = function() {
 //     alert("clicked back button");
 //  }; history.pushState({}, '');

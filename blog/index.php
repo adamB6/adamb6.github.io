@@ -1,7 +1,7 @@
 <?php
 
-    include "logic.php";
-    $query = $query ?? [];
+include "logic.php";
+$query = $query ?? [];
 
 ?>
 
@@ -9,6 +9,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,17 +19,26 @@
 
     <title>Blog using PHP & MySQL</title>
 </head>
+
 <body>
 
     <div class="container mt-5">
-        
+
         <!-- Display any info -->
-        <?php if(isset($_REQUEST['info'])){ ?>
-            <?php if($_REQUEST['info'] == "added"){?>
+        <?php if (isset($_REQUEST['info'])) { ?>
+            <?php if ($_REQUEST['info'] == "added") { ?>
                 <div class="alert alert-success" role="alert">
                     Post has been added successfully
                 </div>
-            <?php }?>
+            <?php } else if ($_REQUEST['info'] == "updated") { ?>
+                <div class="alert alert-success" role="alert">
+                    Post has been updated successfully
+                </div>
+            <?php } else if ($_REQUEST['info'] == "deleted") { ?>
+                <div class="alert alert-danger" role="alert">
+                    Post has been deleted successfully
+                </div>
+            <?php } ?>
         <?php } ?>
 
         <!-- Create a new Post button -->
@@ -38,19 +48,19 @@
 
         <!-- Display posts from database -->
         <div class="row">
-            <?php foreach($query as $q){ ?>
+            <?php foreach ($query as $q) { ?>
                 <div class="col-12 col-lg-4 d-flex justify-content-center">
                     <div class="card text-white bg-dark mt-5" style="width: 18rem;">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo $q['title'];?></h5>
-                            <p class="card-text"><?php echo substr($q['content'], 0, 50);?>...</p>
-                            <a href="view.php?id=<?php echo $q['id']?>" class="btn btn-light">Read More <span class="text-danger">&rarr;</span></a>
+                            <h5 class="card-title"><?php echo $q['title']; ?></h5>
+                            <p class="card-text"><?php echo substr($q['content'], 0, 50); ?>...</p>
+                            <a href="view.php?id=<?php echo $q['id'] ?>" class="btn btn-light">Read More <span class="text-danger">&rarr;</span></a>
                         </div>
                     </div>
                 </div>
-            <?php }?>
+            <?php } ?>
         </div>
-       
+
     </div>
 
     <!-- Bootstrap JS -->
@@ -59,4 +69,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
 </body>
+
 </html>
