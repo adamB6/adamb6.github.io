@@ -173,12 +173,14 @@
     position: absolute;
     overflow-y: auto;
     height: 90%;
-    min-width: 90%;
+    min-width: 80%;
     max-width: 20px;
-    padding-top: 8dvh;
+    margin-top: 6dvh;
+    padding-bottom: 8dvh;
     justify-content: center;
     text-align: center;
     opacity: 0;
+    scrollbar-width: thin;
     visibility: hidden;
     transform: translateX(100%);
 }
@@ -195,6 +197,10 @@
     font-weight: 700;
     line-height: 1em;
     text-transform: uppercase;
+}
+
+.text h4 {
+    padding-bottom: 5dvh;
 }
 
 .text p {
@@ -222,10 +228,10 @@
     letter-spacing: 6px;
 }
 
-/*
+
 .social {
-    position: absolute;
-    bottom: 7em;
+    margin-left: 3dvh;
+    margin-top: 10dvh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -247,7 +253,7 @@
     transform: scale(0.5) translateY(-15px);
 }
 
-*/
+
 
 
 /* Styles specific to the blog section */

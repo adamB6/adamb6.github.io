@@ -1,7 +1,7 @@
 <?php
-define('DB_HOST', 'portfolio.c5eaeakcmpq0.us-east-1.rds.amazonaws.com');
+define('DB_HOST', 'localhost');
 define('DB_USER', 'adam');
-define('DB_PASS', 'JgV5iFZwyBHNVvj');
+define('DB_PASS', 'hNgW[k22B*P8OxCA');
 define('DB_NAME', 'portfolio');
 
 // Create connection

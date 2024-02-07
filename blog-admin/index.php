@@ -1,12 +1,7 @@
 <?php
-
 include "logic.php";
 $query = $query ?? [];
-
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 

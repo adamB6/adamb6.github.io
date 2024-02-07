@@ -16,6 +16,10 @@ document.addEventListener('click', function(e) {
 // Tab selection
 function openTab(evt, tabName) {
     let previousTabIndex = currentTabIndex;
+    if(tabName === PostView){
+        loadPost();
+        return;
+    }
 
     for (let i = 0; i < tablinks.length; i++) {
         tablinks[i].classList.remove("last-clicked");
@@ -34,7 +38,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     openTab(event, 'Home');
 });
 
-// Mouse sliding on laptops
+// Mouse sliding
 let isDragging = false;
 let startX;
 
@@ -45,7 +49,7 @@ slider.addEventListener('mousedown', e => {
 slider.addEventListener('mousemove', e => handleSlide(e.pageX, e => isDragging));
 slider.addEventListener('mouseup', () => isDragging = false);
 
-// Thumb sliding on phones
+// Thumb sliding
 let isTouching = false;
 let startTouchX;
 
@@ -100,6 +104,22 @@ function applyTabAnimations(tabName, previousTabIndex) {
             console.log(textElements)
         }
     }
+}
+
+
+function loadPost() {
+    fetch('getPost.php?id=' + postId)
+    .then(response => response.json())
+    .then(data => {
+        if (!data.error) {
+            // Assuming your post data includes 'title' and 'content' fields
+            const postView = document.getElementById('PostView');
+            postView.innerHTML = `<h3>${data.title}</h3><p>${data.content}</p>`;
+        } else {
+            console.error(data.error);
+        }
+    })
+    .catch(error => console.error('Error fetching the post:', error));
 }
 
 
