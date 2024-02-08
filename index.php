@@ -1,5 +1,4 @@
 <?php
-$blogPostsHtml = '';
 include "blog.php";
 ?>
 <!DOCTYPE html>
@@ -65,13 +64,14 @@ include "blog.php";
                     <h4><?php echo htmlspecialchars($blogPost->getTitle()); ?></h4>
                     <p><?php echo htmlspecialchars(substr($blogPost->getContent(), 0, 200)); ?>...</p>
                     <!-- Assuming you have a way to link to the full blog post, for example with an id -->
-                    <a href="index.php?id=<?php echo $blogPost->getId(); ?>" class="tablinks" data-tab="<?php echo ($blogPost->getId())?>" onclick="openTab(event, 'PostView')">Read More</a>
+                    <a href="#" class="read-more" onclick="loadPost(<?php echo $blogPost->getId(); ?>)">Read More</a>
                 </div>
             <?php endforeach; ?>
         </div>
 
         <div id="PostView" class="text">
         </div>
+        
     </section>
     <footer class="navbar">
         <ul>

@@ -1,5 +1,7 @@
 let currentTabIndex = 0;
+let loadCount = 0;
 const tablinks = document.getElementsByClassName("tablinks");
+const bloglinks = document.getElementsByClassName("bloglinks");
 const textElements = document.getElementsByClassName("text");
 const slider = document.getElementById('slider');
 
@@ -16,11 +18,6 @@ document.addEventListener('click', function(e) {
 // Tab selection
 function openTab(evt, tabName) {
     let previousTabIndex = currentTabIndex;
-    if(tabName === PostView){
-        loadPost();
-        return;
-    }
-
     for (let i = 0; i < tablinks.length; i++) {
         tablinks[i].classList.remove("last-clicked");
         if (tablinks[i].getAttribute('data-tab') === tabName) {
@@ -106,21 +103,31 @@ function applyTabAnimations(tabName, previousTabIndex) {
     }
 }
 
-
-function loadPost() {
-    fetch('getPost.php?id=' + postId)
+function loadPost(postId) {
+    fetch(`blog.php?id=${postId}`)
     .then(response => response.json())
     .then(data => {
+        console.log(data[0].title);
         if (!data.error) {
-            // Assuming your post data includes 'title' and 'content' fields
             const postView = document.getElementById('PostView');
-            postView.innerHTML = `<h3>${data.title}</h3><p>${data.content}</p>`;
+            // Create the HTML content for the post
+            const contentHtml = `
+                <h3>${data[0].title}</h3>
+                <p>${data[0].content}</p>
+                <small>Posted on: ${data[0].created_on}</small>
+            `;
+            postView.innerHTML = contentHtml;
+            // Make sure the PostView container is visible
+            postView.style.display = 'block'; // Adjust this as per your CSS
+            // Optionally, switch to the PostView tab programmatically
+            openTab(null, 'PostView');
         } else {
             console.error(data.error);
         }
     })
     .catch(error => console.error('Error fetching the post:', error));
 }
+
 
 
 

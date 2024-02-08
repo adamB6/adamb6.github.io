@@ -259,7 +259,7 @@
 /* Styles specific to the blog section */
 
 .blog-post {
-    margin-bottom: 20px;
+    margin: 20px;
     padding: 10px;
     border: dotted thin gray;
     min-width: 90%;
