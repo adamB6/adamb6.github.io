@@ -1,5 +1,4 @@
 let currentTabIndex = 0;
-let loadCount = 0;
 const tablinks = document.getElementsByClassName("tablinks");
 const bloglinks = document.getElementsByClassName("bloglinks");
 const textElements = document.getElementsByClassName("text");
