@@ -1,3 +1,5 @@
+import BlogPost from './models/BlogPost.js';
+
 let currentTabIndex = 0;
 const tablinks = document.getElementsByClassName("tablinks");
 const bloglinks = document.getElementsByClassName("bloglinks");
@@ -5,7 +7,7 @@ const textElements = document.getElementsByClassName("text");
 const slider = document.getElementById('slider');
 
 // Click effect
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     let span = document.createElement("span");
     span.className = "click_effect";
     span.style.top = `${e.pageY}px`;
@@ -29,10 +31,25 @@ function openTab(evt, tabName) {
     applyTabAnimations(tabName, previousTabIndex);
 }
 
-// Initialize with Home
-document.addEventListener('DOMContentLoaded', (event) => {
-    openTab(event, 'Home');
+document.addEventListener('DOMContentLoaded', () => {
+    const tablinks = document.querySelectorAll('.tablinks');
+
+    tablinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent the default action
+            const tabName = this.getAttribute('data-tab');
+            openTab(e, tabName);
+        });
+    });
+
+    // Assuming currentTabIndex and tablinks are defined globally or accessible within this scope
+    let currentTabIndex = 0; // Initialize or ensure this is set appropriately elsewhere in your code
+
+    // Initialize with Home or another default tab if needed
+    openTab(null, 'Home');
 });
+
+
 
 // Mouse sliding
 let isDragging = false;
@@ -88,7 +105,7 @@ function applyTabAnimations(tabName, previousTabIndex) {
     for (let i = 0; i < textElements.length; i++) {
         const isCurrentTab = textElements[i].id === tabName;
         textElements[i].classList.remove("slide-in-left", "slide-in-right", "slide-out-left", "slide-out-right");
-        
+
         if (isCurrentTab) {
             const animationClass = previousTabIndex > currentTabIndex ? "slide-in-left" : "slide-in-right";
             textElements[i].classList.add(animationClass);
@@ -102,29 +119,47 @@ function applyTabAnimations(tabName, previousTabIndex) {
     }
 }
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadNewestPosts();
+});
+
+let blogPosts = []; // Array to store BlogPost instances
+
+function loadNewestPosts() {
+    fetch('./blog.php?action=newest')
+        .then(response => response.json())
+        .then(posts => {
+            blogPosts = posts.map(post => new BlogPost(post.id, post.title, post.content, post.created_on)); // Assuming 'created_on' field is returned
+            const container = document.getElementById('Blog');
+            container.innerHTML = ''; // Clear existing content
+            blogPosts.forEach(blogPost => {
+                const postElement = document.createElement('div');
+                postElement.className = 'blog-post';
+                postElement.innerHTML = blogPost.getSummaryHTML();
+                container.appendChild(postElement);
+
+                const readMoreLink = postElement.querySelector('.read-more');
+                readMoreLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    loadPost(blogPost.id);
+                });
+            });
+        })
+        .catch(error => console.error('Error loading posts:', error));
+}
+
 function loadPost(postId) {
-    fetch(`blog.php?id=${postId}`)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data[0].title);
-        if (!data.error) {
-            const postView = document.getElementById('PostView');
-            // Create the HTML content for the post
-            const contentHtml = `
-                <h3>${data[0].title}</h3>
-                <p>${data[0].content}</p>
-                <small>Posted on: ${data[0].created_on}</small>
-            `;
-            postView.innerHTML = contentHtml;
-            // Make sure the PostView container is visible
-            postView.style.display = 'block'; // Adjust this as per your CSS
-            // Optionally, switch to the PostView tab programmatically
-            openTab(null, 'PostView');
-        } else {
-            console.error(data.error);
-        }
-    })
-    .catch(error => console.error('Error fetching the post:', error));
+    const post = blogPosts.find(p => p.id === postId);
+    if (post) {
+        const postView = document.getElementById('PostView');
+        postView.innerHTML = post.getFullHTML();
+        postView.style.display = 'block';
+        // Optionally, switch to the PostView tab programmatically
+        openTab(null, 'PostView');
+    } else {
+        console.error('Post not found');
+    }
 }
 
 

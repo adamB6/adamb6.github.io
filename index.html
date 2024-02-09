@@ -1,10 +1,5 @@
-<?php
-include "blog.php";
-?>
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,22 +46,13 @@ include "blog.php";
 
                 At home, I am blessed with a wonderful family. My wife and I are proud parents of two incredible daughters. These days, my free time is less about gaming and more about spending time with my family. While I am naturally reserved in my personal life, I thrive on collaboration in professional settings, finding great satisfaction in achieving milestones as a team.<br><br>
 
-                I try to learn new things everyday, and have a legimate desire to program cool things. I tend to enjoying solving problems, and find great satisfaction in watching a project evolve over time through effort and planning. As I become more experienced as a professional developer, I hope to find ways to leverage Machine Learning as well. <br><br>
+                I try to learn new things everyday, and have a legimate desire to program cool things. I tend to enjoy solving problems, and find great satisfaction in watching a project evolve over time through planning and effort. As I become more experienced as a professional developer, I hope to find ways to leverage Machine Learning as well. <br><br>
             </p>
         </div>
 
         <!-- Blog Section -->
         <div id="Blog" class="text">
-            <h3>Blog</h3>
-            <h4>In case you're bored...</h4>
-            <?php foreach ($blogPosts as $blogPost) : ?>
-                <div class="blog-post">
-                    <h4><?php echo htmlspecialchars($blogPost->getTitle()); ?></h4>
-                    <p><?php echo htmlspecialchars(substr($blogPost->getContent(), 0, 200)); ?>...</p>
-                    <!-- Assuming you have a way to link to the full blog post, for example with an id -->
-                    <a href="#" class="read-more" onclick="loadPost(<?php echo $blogPost->getId(); ?>)">Read More</a>
-                </div>
-            <?php endforeach; ?>
+            <!-- Newest posts will be dynamically inserted here -->
         </div>
 
         <div id="PostView" class="text">
@@ -75,14 +61,14 @@ include "blog.php";
     </section>
     <footer class="navbar">
         <ul>
-            <li><a href="#" class="tablinks" data-tab="Home" onclick="openTab(event, 'Home')">Home</a></li>
-            <li><a href="#" class="tablinks" data-tab="About" onclick="openTab(event, 'About')">About</a></li>
-            <li><a href="#" class="tablinks" data-tab="Blog" onclick="openTab(event, 'Blog')">Blog</a></li>
+            <li><a href="#" class="tablinks" data-tab="Home">Home</a></li>
+            <li><a href="#" class="tablinks" data-tab="About">About</a></li>
+            <li><a href="#" class="tablinks" data-tab="Blog">Blog</a></li>
             <li><a href="#">Projects</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </footer>
-    <script src="main.js"></script>
+    <script src="main.js" type="module"></script>
 </body>
 
 </html>
