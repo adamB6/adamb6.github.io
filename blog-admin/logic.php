@@ -1,11 +1,16 @@
 <?php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'adam');
-define('DB_PASS', 'hNgW[k22B*P8OxCA');
-define('DB_NAME', 'portfolio');
+require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$host = $_ENV['DB_HOST'];
+$dbname = $_ENV['DB_NAME'];
+$user = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASSWORD'];
 
 // Create connection
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$conn = new mysqli($host, $user, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
@@ -19,11 +24,15 @@ if (isset($_REQUEST["new_post"])) {
   $title = $_REQUEST["title"];
   $content = $_REQUEST["content"];
 
-  $sql = "INSERT INTO blog(title, content) VALUES('$title', '$content')";
-  mysqli_query($conn, $sql);
+  // Using prepared statements to prevent SQL injection
+  $stmt = $conn->prepare("INSERT INTO blog(title, content) VALUES(?, ?)");
+  $stmt->bind_param("ss", $title, $content);
+  $stmt->execute();
+
   header("Location: index.php?info=added");
   exit();
 }
+
 
 if (isset($_REQUEST["id"])) {
   $id = $_REQUEST["id"];
@@ -37,21 +46,27 @@ if (isset($_REQUEST['update'])){
   $title = $_REQUEST['title'];
   $content = $_REQUEST['content'];
 
-  $sql = "UPDATE blog SET title = '$title', content = '$content' WHERE id = $id";
-  mysqli_query($conn, $sql);
+  // Using prepared statements to prevent SQL injection
+  $stmt = $conn->prepare("UPDATE blog SET title = ?, content = ? WHERE id = ?");
+  $stmt->bind_param("ssi", $title, $content, $id);
+  $stmt->execute();
 
   header("Location: index.php?info=updated");
   exit();
 }
 
+
 if (isset($_REQUEST["delete"])) {
   $id = $_REQUEST["id"];
 
-  $sql = "DELETE FROM blog WHERE id = $id";
-  $query = mysqli_query($conn, $sql);
+  // Using prepared statements to prevent SQL injection
+  $stmt = $conn->prepare("DELETE FROM blog WHERE id = ?");
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
 
   header("Location: index.php?info=deleted");
   exit();
 }
+
 
 mysqli_close($conn);
