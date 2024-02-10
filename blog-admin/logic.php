@@ -8,9 +8,10 @@ $host = $_ENV['DB_HOST'];
 $dbname = $_ENV['DB_NAME'];
 $user = $_ENV['DB_USER'];
 $password = $_ENV['DB_PASSWORD'];
+$port = $_ENV['DB_PORT'];
 
 // Create connection
-$conn = new mysqli($host, $user, $password, $dbname);
+$conn = new mysqli($host, $user, $password, $dbname, $port);
 
 // Check connection
 if ($conn->connect_error) {
