@@ -32,6 +32,8 @@ class BlogPost {
         // Ensures content is sanitized before insertion
         return `
             <h3>${this.title}</h3>
+                <br>
+                <br>
             <p>${this.content}</p>
             <small>Posted on: ${this.sanitize(this.createdOn)}</small>
         `;
