@@ -3,7 +3,7 @@ class BlogPost {
         this.id = id;
         this.title = this.sanitize(title);
         this.content = this.sanitize(content);
-        this.createdOn = created_on; // Assuming there's a createdOn field
+        this.createdOn = Date(created_on); // Assuming there's a createdOn field
     }
 
     // Basic HTML sanitization function to prevent XSS
@@ -20,6 +20,7 @@ class BlogPost {
         // Ensures content is sanitized before insertion
         return `
             <div class="blog-post">
+            <small class="blog-date">Posted on: ${this.sanitize(this.createdOn)}</small>
                 <h4>${this.title}</h4>
                 <p>${this.content.substring(0, 200)}...</p>
                 <a href="#" class="read-more" >Read More</a>
@@ -32,8 +33,6 @@ class BlogPost {
         // Ensures content is sanitized before insertion
         return `
             <h3>${this.title}</h3>
-                <br>
-                <br>
             <p>${this.content}</p>
             <small>Posted on: ${this.sanitize(this.createdOn)}</small>
         `;

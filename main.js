@@ -132,7 +132,7 @@ function loadNewestPosts() {
         .then(posts => {
             blogPosts = posts.map(post => new BlogPost(post.id, post.title, post.content, post.created_on)); // Assuming 'created_on' field is returned
             const container = document.getElementById('Blog');
-            container.innerHTML = ''; // Clear existing content
+            container.innerHTML = '<h3>Blog</h3>'; // Clear existing content
             blogPosts.forEach(blogPost => {
                 const postElement = document.createElement('div');
                 postElement.className = 'blog-post';
