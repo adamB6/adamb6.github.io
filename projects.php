@@ -3,13 +3,13 @@ require 'logic.php';
 
 header('Content-Type: application/json');
 
-$sql = "SELECT id, title, content, created_on FROM blog ORDER BY created_on DESC";
+$sql = "SELECT title, description FROM projects ORDER BY id DESC";
 $query = mysqli_query($conn, $sql);
 
-$posts = [];
+$projects = [];
 while ($row = mysqli_fetch_assoc($query)) {
-    $posts[] = $row;
+    $projects[] = $row;
 }
 
-echo json_encode($posts);
+echo json_encode($projects);
 ?>

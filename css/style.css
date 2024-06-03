@@ -296,6 +296,42 @@
     }
 }
 
+/* Contact form styles */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    margin: 5px 0;
+}
+
+.contact-form input,
+.contact-form textarea {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.contact-form textarea {
+    height: 150px; /* Increase the height of the textarea */
+    width: 200px;
+}
+
+.contact-form button {
+    padding: 10px;
+    background-color: #333;
+    color: #3f0e0e;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background-color: #555;
+}
+
 @media(max-height: 600px){
     .showcase {
         padding-bottom: 30dvh;

@@ -8,7 +8,6 @@
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
     <link rel="stylesheet" href="css/style.css">
-
     <title>Adam's Portfolio</title>
 </head>
 
@@ -20,52 +19,68 @@
     <section id="slider" class="showcase">
         <!-- Home Section -->
         <div id="Home" class="text">
-            <h3>Welcome</h3><h4>To My Portfolio Website</h4>
+            <h3>Welcome</h3>
+            <h4>To My Portfolio Website</h4>
             <p>Hey, I'm Adam, your next ServiceNow Developer in the making. This website? It's my digital playground. Armed with HTML, CSS, JavaScript, and a sprinkle of PHP, I'm here to keep things sleek and experiment with the basics.
 
                 It's going to be super responsive, looking great on whatever device you're using to check it out. Also, it's my blogging corner, where I'll share my tech journey, play with PHP, and dabble in SQL. Plus, I'll showcase my past and future projects — a peek into what I've been up to and where I'm headed.
-                
+
                 Excited to learn and earn on this adventure, I'm all ears for employment opportunities. Let's create something cool!
             </p>
             <a href="adam_botens.pdf" download="Adam_Resume">Download Resume</a>
             <ul class="social">
-                <li><a href="https://github.com/adamB6" target="_blank"><img src="images/github.png" alt="Github"></a>
-                </li>
-                <li><a href="https://www.linkedin.com/in/adam-botens/" target="_blank"><img src="images/linkedin.png"
-                            alt="Github"></a></li>
+                <li><a href="https://github.com/adamB6" target="_blank"><img src="images/github.png" alt="Github"></a></li>
+                <li><a href="https://www.linkedin.com/in/adam-botens/" target="_blank"><img src="images/linkedin.png" alt="LinkedIn"></a></li>
             </ul>
         </div>
         <!-- About Section -->
         <div id="About" class="text">
-            <h3>About Me</h3><h4>Always Under Construction</h4>
+            <h3>About Me</h3>
+            <h4>Always Under Construction</h4>
             <p>So, I've done a stint in the Army, where I got pretty good at rallying the troops, making plans that don’t completely fall apart, and keeping my cool when things got more intense than a season finale cliffhanger. Those years taught me a thing or two about solving puzzles that don't want to be solved and juggling a dozen balls without dropping them all – pretty handy skills, if you ask me.
 
                 Not too long ago, I decided to tackle a Bachelor's degree in Computer Science because, why not? Turns out, I've got a knack for this tech stuff and a burning curiosity to see where it can take me, especially in creating stuff that hasn't been dreamed up yet.
-                
+
                 Now, I'm diving headfirst into this SkillBridge ServiceNow gig that's wrapping up in May. It's like discovering a new level in a game that’s both challenging and kinda thrilling. ServiceNow's this massive, untapped well of potential for making businesses run like well-oiled machines, and I’m all in on cracking that code.
 
-                In my personal life, I'm a father and a husband. Family means a lot to me. 
+                In my personal life, I'm a father and a husband. Family means a lot to me.
 
                 I spend a good portion of my time on self-development, working with my kids on their interests, watching movies and shows with my wife, playing videos, and being walked by my adventurous Golden Retriever.
             </p>
         </div>
-
         <!-- Blog Section -->
         <div id="Blog" class="text">
             <!-- Newest posts will be dynamically inserted here -->
         </div>
-
+        <!-- Post View Section -->
         <div id="PostView" class="text">
         </div>
-
+        <!-- Projects Section -->
+        <div id="Projects" class="text">
+            <h3>Projects</h3>
+        </div>
+        <!-- Contact Section -->
+        <div id="Contact" class="text">
+            <h3>Contact</h3>
+            <form id="contact-form" action="send_email.php" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Send</button>
+                <p id="form-message"></p>
+            </form>
+        </div>
     </section>
     <footer class="navbar">
         <ul>
             <li><a href="#" class="tablinks" data-tab="Home">Home</a></li>
             <li><a href="#" class="tablinks" data-tab="About">About</a></li>
             <li><a href="#" class="tablinks" data-tab="Blog">Blog</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#" class="tablinks" data-tab="Projects">Projects</a></li>
+            <li><a href="#" class="tablinks" data-tab="Contact">Contact</a></li>
         </ul>
     </footer>
     <script src="main.js" type="module"></script>

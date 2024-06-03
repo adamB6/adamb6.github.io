@@ -2,7 +2,6 @@ import BlogPost from './models/BlogPost.js';
 
 let currentTabIndex = 0;
 const tablinks = document.getElementsByClassName("tablinks");
-const bloglinks = document.getElementsByClassName("bloglinks");
 const textElements = document.getElementsByClassName("text");
 const slider = document.getElementById('slider');
 
@@ -42,14 +41,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Assuming currentTabIndex and tablinks are defined globally or accessible within this scope
-    let currentTabIndex = 0; // Initialize or ensure this is set appropriately elsewhere in your code
-
     // Initialize with Home or another default tab if needed
     openTab(null, 'Home');
+
+    // Load newest posts
+    loadNewestPosts();
+
+    // Load projects
+    loadProjects();
+
+    // Handle contact form submission
+    document.getElementById('contact-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(responseText => {
+            document.getElementById('form-message').textContent = responseText;
+            form.reset();
+        })
+        .catch(error => {
+            document.getElementById('form-message').textContent = 'Oops! There was a problem with your submission.';
+            console.error('Error:', error);
+        });
+    });
 });
-
-
 
 // Mouse sliding
 let isDragging = false;
@@ -59,7 +81,7 @@ slider.addEventListener('mousedown', e => {
     startX = e.pageX;
     isDragging = true;
 });
-slider.addEventListener('mousemove', e => handleSlide(e.pageX, e => isDragging));
+slider.addEventListener('mousemove', e => handleSlide(e.pageX, () => isDragging));
 slider.addEventListener('mouseup', () => isDragging = false);
 
 // Thumb sliding
@@ -99,7 +121,6 @@ function switchTab(direction) {
     }
 }
 
-
 // Apply animations
 function applyTabAnimations(tabName, previousTabIndex) {
     for (let i = 0; i < textElements.length; i++) {
@@ -114,14 +135,13 @@ function applyTabAnimations(tabName, previousTabIndex) {
         if (previousTabIndex !== currentTabIndex && previousTabIndex >= 0 && previousTabIndex < textElements.length) {
             const animationClass = previousTabIndex > currentTabIndex ? "slide-out-right" : "slide-out-left";
             textElements[previousTabIndex].classList.add(animationClass);
-            console.log(textElements)
         }
     }
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
     loadNewestPosts();
+    loadProjects();
 });
 
 let blogPosts = []; // Array to store BlogPost instances
@@ -162,10 +182,22 @@ function loadPost(postId) {
     }
 }
 
-
-
-
-
-// window.onpopstate = function() {
-//     alert("clicked back button");
-//  }; history.pushState({}, '');
+// Function to load projects
+function loadProjects() {
+    fetch('./projects.php?action=getProjects')
+        .then(response => response.json())
+        .then(projects => {
+            const container = document.getElementById('Projects');
+            container.innerHTML = '<h3>Projects</h3>'; // Clear existing content
+            projects.forEach(project => {
+                const projectElement = document.createElement('div');
+                projectElement.className = 'project';
+                projectElement.innerHTML = `
+                    <h4>${project.title}</h4>
+                    <p>${project.description}</p>
+                `;
+                container.appendChild(projectElement);
+            });
+        })
+        .catch(error => console.error('Error loading projects:', error));
+}
