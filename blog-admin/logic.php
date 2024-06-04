@@ -70,4 +70,45 @@ if (isset($_REQUEST["delete"])) {
 }
 
 
+// Handle projects
+if (isset($_REQUEST["new_project"])) {
+  $title = $_REQUEST["title"];
+  $description = $_REQUEST["project_description"];
+
+  // Using prepared statements to prevent SQL injection
+  $stmt = $conn->prepare("INSERT INTO projects (title, project_description) VALUES (?, ?)");
+  $stmt->bind_param("ss", $title, $project_description);
+  $stmt->execute();
+
+  header("Location: index.php?info=project_added");
+  exit();
+}
+
+if (isset($_REQUEST['update_project'])) {
+  $id = $_REQUEST['id'];
+  $title = $_REQUEST['title'];
+  $description = $_REQUEST['project_description'];
+
+  // Using prepared statements to prevent SQL injection
+  $stmt = $conn->prepare("UPDATE projects SET title = ?, project_description = ? WHERE id = ?");
+  $stmt->bind_param("ssi", $title, $project_description, $id);
+  $stmt->execute();
+
+  header("Location: index.php?info=project_updated");
+  exit();
+}
+
+if (isset($_REQUEST["delete_project"])) {
+  $id = $_REQUEST["id"];
+
+  // Using prepared statements to prevent SQL injection
+  $stmt = $conn->prepare("DELETE FROM projects WHERE id = ?");
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
+
+  header("Location: index.php?info=project_deleted");
+  exit();
+}
+
 mysqli_close($conn);
+?>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Projects</title>
+</head>
+<body>
+    <div id="Projects"></div>
+    <script>
+        function loadProjects() {
+            console.log('loadProjects called'); // Add this line
+            fetch('./projects.php?action=getProjects')
+                .then(response => {
+                    console.log('Network response:', response);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(projects => {
+                    console.log('Projects fetched:', projects); // Log the fetched projects
+                    const container = document.getElementById('Projects');
+                    container.innerHTML = '<h3>Projects</h3>'; // Clear existing content
+                    if (projects.length === 0) {
+                        container.innerHTML += '<p>No projects found.</p>';
+                    } else {
+                        projects.forEach(project => {
+                            const projectElement = document.createElement('div');
+                            projectElement.className = 'project';
+                            projectElement.innerHTML = `
+                                <h4>${project.title}</h4>
+                                <p>${project.description}</p>
+                            `;
+                            container.appendChild(projectElement);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading projects:', error);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadProjects(); // Ensure this line is present
+        });
+    </script>
+</body>
+</html>

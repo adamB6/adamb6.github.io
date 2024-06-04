@@ -44,11 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize with Home or another default tab if needed
     openTab(null, 'Home');
 
+    // Load projects
+    loadProjects();
     // Load newest posts
     loadNewestPosts();
 
-    // Load projects
-    loadProjects();
 
     // Handle contact form submission
     document.getElementById('contact-form').addEventListener('submit', function (e) {
@@ -77,23 +77,22 @@ document.addEventListener('DOMContentLoaded', () => {
 let isDragging = false;
 let startX;
 
-slider.addEventListener('mousedown', e => {
-    startX = e.pageX;
-    isDragging = true;
-});
-slider.addEventListener('mousemove', e => handleSlide(e.pageX, () => isDragging));
-slider.addEventListener('mouseup', () => isDragging = false);
+if (slider) { // Ensure slider exists
+    slider.addEventListener('mousedown', e => {
+        startX = e.pageX;
+        isDragging = true;
+    });
+    slider.addEventListener('mousemove', e => handleSlide(e.pageX, () => isDragging));
+    slider.addEventListener('mouseup', () => isDragging = false);
 
-// Thumb sliding
-let isTouching = false;
-let startTouchX;
-
-slider.addEventListener('touchstart', e => {
-    startTouchX = e.touches[0].pageX;
-    isTouching = true;
-});
-slider.addEventListener('touchmove', e => handleSlide(e.touches[0].pageX, () => isTouching));
-slider.addEventListener('touchend', () => isTouching = false);
+    // Thumb sliding
+    slider.addEventListener('touchstart', e => {
+        startTouchX = e.touches[0].pageX;
+        isTouching = true;
+    });
+    slider.addEventListener('touchmove', e => handleSlide(e.touches[0].pageX, () => isTouching));
+    slider.addEventListener('touchend', () => isTouching = false);
+}
 
 // Handle slide movement
 function handleSlide(currentPosition, isSliding) {
@@ -139,18 +138,15 @@ function applyTabAnimations(tabName, previousTabIndex) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    loadNewestPosts();
-    loadProjects();
-});
-
 let blogPosts = []; // Array to store BlogPost instances
 
+// Function to load newest posts
 function loadNewestPosts() {
     fetch('./blog.php?action=newest')
         .then(response => response.json())
         .then(posts => {
-            blogPosts = posts.map(post => new BlogPost(post.id, post.title, post.content, post.created_on)); // Assuming 'created_on' field is returned
+            console.log('Fetched posts:', posts);
+            blogPosts = posts.map(post => new BlogPost(post.id, post.title, post.content, post.created_on));
             const container = document.getElementById('Blog');
             container.innerHTML = '<h3>Blog</h3>'; // Clear existing content
             blogPosts.forEach(blogPost => {
@@ -184,20 +180,39 @@ function loadPost(postId) {
 
 // Function to load projects
 function loadProjects() {
+    console.log('loadProjects called'); // Add this line
     fetch('./projects.php?action=getProjects')
-        .then(response => response.json())
+        .then(response => {
+            console.log('Network response:', response);
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(projects => {
+            console.log('Projects fetched:', projects); // Log the fetched projects
             const container = document.getElementById('Projects');
             container.innerHTML = '<h3>Projects</h3>'; // Clear existing content
-            projects.forEach(project => {
-                const projectElement = document.createElement('div');
-                projectElement.className = 'project';
-                projectElement.innerHTML = `
-                    <h4>${project.title}</h4>
-                    <p>${project.description}</p>
-                `;
-                container.appendChild(projectElement);
-            });
+            if (projects.length === 0) {
+                container.innerHTML += '<p>No projects found.</p>';
+            } else {
+                projects.forEach(project => {
+                    const projectElement = document.createElement('div');
+                    projectElement.className = 'project';
+                    projectElement.innerHTML = `
+                        <h4>${project.title}</h4>
+                        <p>${project.description}</p>
+                    `;
+                    container.appendChild(projectElement);
+                });
+            }
         })
-        .catch(error => console.error('Error loading projects:', error));
+        .catch(error => {
+            console.error('Error loading projects:', error);
+        });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadNewestPosts();
+    loadProjects(); // Ensure this line is present
+});

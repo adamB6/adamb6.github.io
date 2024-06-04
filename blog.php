@@ -1,15 +1,35 @@
 <?php
-require 'logic.php';
+require __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 header('Content-Type: application/json');
 
-$sql = "SELECT id, title, content, created_on FROM blog ORDER BY created_on DESC";
-$query = mysqli_query($conn, $sql);
+$host = $_ENV['DB_HOST'];
+$dbname = $_ENV['DB_NAME'];
+$user = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASSWORD'];
 
-$posts = [];
-while ($row = mysqli_fetch_assoc($query)) {
-    $posts[] = $row;
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
+
+    if (isset($_GET['action']) && $_GET['action'] == 'newest') {
+        $stmt = $pdo->query('SELECT id, title, content, created_on FROM blog ORDER BY created_on DESC LIMIT 10');
+
+        $posts = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            // Ensure the date is formatted in ISO 8601
+            $row['created_on'] = date('c', strtotime($row['created_on']));
+            $posts[] = $row;
+        }
+
+        echo json_encode($posts);
+    }
+} catch (PDOException $e) {
+    error_log($e->getMessage()); // Log the detailed error for server-side review
+    http_response_code(500);
+    echo json_encode(['error' => 'An internal server error occurred.']);
 }
-
-echo json_encode($posts);
-?>
