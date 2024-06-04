@@ -1,5 +1,24 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require 'vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 header('Content-Type: application/json');
+
+// Function to log messages to a custom file
+function log_message($message) {
+    error_log($message, 3, '/var/www/html/logs/error.log'); // Update the path if necessary
+}
+
+// Buffer output to avoid sending any output before JSON response
+ob_start();
+
+$response = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = strip_tags(trim($_POST["name"]));
@@ -8,40 +27,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check that data was sent
     if (empty($name) || empty($message) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        // Set a 400 (bad request) response code and exit
         http_response_code(400);
-        echo json_encode(['error' => 'Please complete the form and try again.']);
+        $response['error'] = 'Please complete the form and try again.';
+        log_message("400 Bad Request: Incomplete form submission.\n");
+        echo json_encode($response);
+        ob_end_flush(); // Flush the buffer and end output buffering
         exit;
     }
 
-    // Recipient email
-    $recipient = "asbotens@gmail.com";
+    $mail = new PHPMailer(true);
+    try {
+        // Server settings
+        $mail->SMTPDebug = 0; // Disable debug output to avoid corrupting JSON response
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'portfoliomailer33@gmail.com'; // Your Gmail address
+        $mail->Password   = 'wbio zope ktwx eqem'; // Your App Password or Gmail password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
 
-    // Email subject
-    $subject = "New contact from $name";
+        // Recipients
+        $mail->setFrom('portfoliomailer33@gmail.com', 'Your Name'); // Replace 'Your Name' with the sender's name
+        $mail->addAddress('asbotens@gmail.com'); // Add a recipient
 
-    // Email content
-    $email_content = "Name: $name\n";
-    $email_content .= "Email: $email\n\n";
-    $email_content .= "Message:\n$message\n";
+        // Content
+        $mail->isHTML(false);
+        $mail->Subject = "New contact from $name";
+        $mail->Body    = "Name: $name\nEmail: $email\n\nMessage:\n$message\n";
 
-    // Email headers
-    $email_headers = "From: $name <$email>";
-
-    // Send the email
-    if (mail($recipient, $subject, $email_content, $email_headers)) {
-        // Set a 200 (okay) response code
+        $mail->send();
         http_response_code(200);
-        echo json_encode(['message' => 'Thank You! Your message has been sent.']);
-    } else {
-        // Set a 500 (internal server error) response code
+        $response['message'] = 'Thank You! Your message has been sent.';
+        log_message("200 OK: Email sent successfully.\n");
+    } catch (Exception $e) {
         http_response_code(500);
-        echo json_encode(['error' => 'Oops! Something went wrong and we couldn\'t send your message.']);
+        $response['error'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        log_message("500 Internal Server Error: {$mail->ErrorInfo}\n");
     }
 } else {
-    // Not a POST request, set a 403 (forbidden) response code
     http_response_code(403);
-    echo json_encode(['error' => 'There was a problem with your submission, please try again.']);
+    $response['error'] = 'There was a problem with your submission, please try again.';
+    log_message("403 Forbidden: Invalid request method.\n");
 }
-?>
 
+// Output the JSON response
+echo json_encode($response);
+ob_end_flush(); // Flush the buffer and end output buffering
+?>
