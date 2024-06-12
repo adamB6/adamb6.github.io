@@ -8,7 +8,6 @@
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
     <link rel="stylesheet" href="css/style.css">
-
     <title>Adam's Portfolio</title>
 </head>
 
@@ -20,66 +19,95 @@
     <section id="slider" class="showcase">
         <!-- Home Section -->
         <div id="Home" class="text">
-            <h3>Welcome</h3><h4>To My Portfolio Website</h4>
-            <p>Hi, I'm Adam, a junior software developer. I'll be using this website to work on development with HTML,
-                CSS, JavaScript, and PHP. My aim is to keep it lightweight and use it to play with the basic tools. This
-                website will be responsive and capable of offering an optimized view on all devices. This is also a
-                space for me to blog about my learning journey, which will allow me to learn and play with PHP and a
-                little bit of SQL. Lastly, I plan to showcase past projects as well as those I have planned for the
-                future.
+            <h3>Welcome</h3>
+            <h4>To My Portfolio Website</h4>
+            <p>Hey, I'm Adam, your next ServiceNow Developer in the making. This website? It's my digital playground. Armed with HTML, CSS, JavaScript, and a sprinkle of PHP, I'm here to keep things sleek and experiment with the basics.
 
-                I am enthusiastic to earn while I learn and
-                am currently open to employment opportunities.
+                It's going to be super responsive, looking great on whatever device you're using to check it out. Also, it's my blogging corner, where I'll share my tech journey, play with PHP, and dabble in SQL. Plus, I'll showcase my past and future projects — a peek into what I've been up to and where I'm headed.
+
+                Excited to learn and earn on this adventure, I'm all ears for employment opportunities. Let's create something cool!
             </p>
-            <a href="ADAM_BOTENS_RESUME.pdf" download="Adam_Resume">Download Resume</a>
+            <a href="adam_botens.pdf" download="Adam_Resume">Download Resume</a>
             <ul class="social">
-                <li><a href="https://github.com/adamB6" target="_blank"><img src="images/github.png" alt="Github"></a>
-                </li>
-                <li><a href="https://www.linkedin.com/in/adam-botens/" target="_blank"><img src="images/linkedin.png"
-                            alt="Github"></a></li>
+                <li><a href="https://github.com/adamB6" target="_blank"><img src="images/github.png" alt="Github"></a></li>
+                <li><a href="https://www.linkedin.com/in/adam-botens/" target="_blank"><img src="images/linkedin.png" alt="LinkedIn"></a></li>
             </ul>
         </div>
         <!-- About Section -->
         <div id="About" class="text">
-            <h3>About Me</h3><h4>Always Under Construction</h4>
-            <p>After 12 years of dedicated service, I concluded my military career and began pursuing my life long
-                dream of working with computers and building cool things as a job occupation. In the Army, I specialized
-                in artillery, a role markedly different from my current pursuit in the tech industry. My interest in
-                technology has deep roots, sparked in childhood by gaming and early experiments with computers and
-                coding. My interest in these subjects has led to a healthy/unhealthy relationship with optimization and
-                user experience.
-
-                At home, I am blessed with a wonderful family. My wife and I are proud parents of two incredible
-                daughters. These days, my free time is less about gaming and more about spending time with my family.
-                While I am naturally reserved in my personal life, I thrive on collaboration in professional settings,
-                finding great satisfaction in achieving milestones as a team.
-
-                I try to learn new things everyday, and have a legimate desire to program cool things. I tend to enjoy
-                solving problems, and find great satisfaction in watching a project evolve over time through planning
-                and effort. As I become more experienced as a professional developer, I hope to find ways to leverage
-                Machine Learning as well.
-            </p>
+            <h3>About Me</h3>
+            <h4>Always Under Construction</h4><br>
+            <hr>
+            <h5>Professional Life:</h5>
+            <img class="about-pics" src="images/meCode.png">
+            <ul class="about-list">
+                <li>Army Veteran</li>
+                <li>Computer Scientist</li>
+                <li>ServiceNow Developer - CAD, CSA, CIS-ITSM</li>
+                <li>8 Micro-Certifications</li>
+                <li>ScrumMaster Certified</li>
+                <li>ITIL v4 Certified</li>
+            </ul>
+            <hr>  
+            <h5>Personal Life</h5>
+            <img class="about-pics" src="images/meFamily.png">
+            <ul>
+                <li>Family man - Father and husband</li>
+                <li>Food connoisseur</li>
+                <li>Fitness advocate</li>
+                <li>Lifelong Learner</li>
+                <li>Gamer</li>
+                <li>UFC Fan</li>
+                <li>Tampa Bay Buccaneers Fan</li>
+                <li>Best friend of a Golden Retriever</li>
+                <li>I love being near or in the ocean</li>
+            </ul>         
         </div>
-
         <!-- Blog Section -->
         <div id="Blog" class="text">
             <!-- Newest posts will be dynamically inserted here -->
         </div>
-
+        <!-- Post View Section -->
         <div id="PostView" class="text">
         </div>
+        <!-- Projects Section -->
+        <div id="Projects" class="text">
+            <!-- Projects will be dynamically inserted here -->
+        </div>
+        <!-- Contact Section -->
+        <div id="Contact" class="text">
+            <h3>Contact</h3>
+            <form id="contact-form" action="send_email.php" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
 
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required spellcheck="true" rows="6" cols="50"></textarea>
+
+                <div class="recaptcha-container">
+                    <div class="g-recaptcha" data-sitekey="6LeBxPUpAAAAAO2YDtafoCijP2tsQXA0R0QXj8MP" style="margin:auto; max-width:305px;"></div>
+                </div><br>
+
+                <button class="btn" type="submit">Send</button>
+                <p id="form-message"></p>
+            </form>
+        </div>
     </section>
     <footer class="navbar">
         <ul>
             <li><a href="#" class="tablinks" data-tab="Home">Home</a></li>
             <li><a href="#" class="tablinks" data-tab="About">About</a></li>
             <li><a href="#" class="tablinks" data-tab="Blog">Blog</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#" class="tablinks" data-tab="Projects">Projects</a></li>
+            <li><a href="#" class="tablinks" data-tab="Contact">Contact</a></li>
         </ul>
     </footer>
-    <script src="main.js" type="module"></script>
+    <script src="main.js?v=1.0" type="module"></script>
+    <script src="contact-form.js" type="module"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
 </html>

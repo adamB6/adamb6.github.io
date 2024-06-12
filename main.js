@@ -119,18 +119,15 @@ function applyTabAnimations(tabName, previousTabIndex) {
     }
 }
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    loadNewestPosts();
-});
-
 let blogPosts = []; // Array to store BlogPost instances
 
+// Function to load newest posts
 function loadNewestPosts() {
     fetch('./blog.php?action=newest')
         .then(response => response.json())
         .then(posts => {
-            blogPosts = posts.map(post => new BlogPost(post.id, post.title, post.content, post.created_on)); // Assuming 'created_on' field is returned
+            console.log('Fetched posts:', posts);
+            blogPosts = posts.map(post => new BlogPost(post.id, post.title, post.content, post.created_on));
             const container = document.getElementById('Blog');
             container.innerHTML = '<h3>Blog</h3>'; // Clear existing content
             blogPosts.forEach(blogPost => {
@@ -149,6 +146,7 @@ function loadNewestPosts() {
         .catch(error => console.error('Error loading posts:', error));
 }
 
+// Once a post is drilled into
 function loadPost(postId) {
     const post = blogPosts.find(p => p.id === postId);
     if (post) {
@@ -161,6 +159,46 @@ function loadPost(postId) {
         console.error('Post not found');
     }
 }
+
+// Function to load projects
+function loadProjects() {
+    console.log('loadProjects called'); // Add this line
+    fetch('./projects.php?action=getProjects')
+        .then(response => {
+            console.log('Network response:', response);
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(projects => {
+            console.log('Projects fetched:', projects); // Log the fetched projects
+            const container = document.getElementById('Projects');
+            container.innerHTML = '<h3>Projects</h3>'; // Clear existing content
+            if (projects.length === 0) {
+                container.innerHTML += '<p>No projects found.</p>';
+            } else {
+                projects.forEach(project => {
+                    const projectElement = document.createElement('div');
+                    projectElement.className = 'project';
+                    projectElement.innerHTML = `
+                    <hr>
+                        <h4>${project.title}</h4>
+                        <p>${project.project_description}</p>
+                    `;
+                    container.appendChild(projectElement);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error loading projects:', error);
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadNewestPosts();
+    loadProjects(); // Ensure this line is present
+});
 
 
 

@@ -201,6 +201,20 @@
     text-transform: uppercase;
 }
 
+.text h4 {
+    font-size: 2em;
+    font-weight: 700;
+    line-height: 1em;
+    text-transform: uppercase;
+}
+
+.text h5 {
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 1em;
+    text-transform: uppercase;
+}
+
 .text p {
     font-size: 1.1em;
     padding: 2dvh;
@@ -244,16 +258,13 @@
     display: inline-block;
     filter: invert(1);
     margin-right: 20px;
-    transform: scale(0.5);
+    transform: scale(0.7);
     transition: 0.5s;
 }
 
 .social li a:hover {
-    transform: scale(0.5) translateY(-15px);
+    transform: scale(0.7) translateY(-15px);
 }
-
-
-
 
 /* Styles specific to the blog section */
 
@@ -300,4 +311,48 @@
     .showcase {
         padding-bottom: 30dvh;
     }
+}
+
+/* Add this to your css/style.css */
+.btn {
+    display: inline-block;
+    font-size: 1em;
+    background: white;
+    padding: 10px 30px;
+    text-decoration: none;
+    color: black;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    letter-spacing: 6px;
+}
+
+#About {
+    text-align: center; /* Center align text and images within the section */
+    padding: 20px;
+}
+
+.about-pics {
+    width: 20%; /* Width of the image is 20% of its parent */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensures the image is treated as a block element */
+    margin: 0 auto; /* Center the image horizontally */
+}
+
+.about-list {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+}
+
+.about-list li {
+    margin: 5px 0; /* Add some space between list items */
+}
+
+textarea {
+    overflow: auto;
+    resize: vertical;
 }
